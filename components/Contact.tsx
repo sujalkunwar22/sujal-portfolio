@@ -13,6 +13,39 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
 );
 
 const Contact = () => {
+  const [result, setResult] = React.useState("");
+  const [isSending, setIsSending] = React.useState(false);
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSending(true);
+    setResult("Sending....");
+    
+    const formData = new FormData(event.currentTarget);
+    formData.append("access_key", "a345d492-20af-4ecc-8d90-088ea4832774");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        (event.target as HTMLFormElement).reset();
+      } else {
+        setResult("Error: " + data.message);
+      }
+    } catch (error) {
+      setResult("Network error. Please try again.");
+    } finally {
+      setIsSending(false);
+      // Clear status after 5 seconds
+      setTimeout(() => setResult(""), 5000);
+    }
+  };
+
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
@@ -36,11 +69,13 @@ const Contact = () => {
             transition={{ duration: 1 }}
             className="glass-card p-10 rounded-[2rem]"
           >
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-8" onSubmit={onSubmit}>
               <div className="relative group">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-2 block ml-2">Name</label>
                 <input 
                   type="text" 
+                  name="name"
+                  required
                   placeholder="Sujal Kunwar"
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-candy-blue/50 transition-all duration-300 placeholder:text-white/10 font-sans"
                 />
@@ -50,6 +85,8 @@ const Contact = () => {
                 <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-2 block ml-2">Email</label>
                 <input 
                   type="email" 
+                  name="email"
+                  required
                   placeholder="sujal@example.com"
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-candy-blue/50 transition-all duration-300 placeholder:text-white/10 font-sans"
                 />
@@ -58,19 +95,35 @@ const Contact = () => {
               <div className="relative group">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-2 block ml-2">Message</label>
                 <textarea 
+                  name="message"
+                  required
                   rows={4}
                   placeholder="Tell me about your project..."
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-candy-blue/50 transition-all duration-300 placeholder:text-white/10 font-sans resize-none"
                 />
               </div>
 
-              <button 
-                className="w-full px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group relative overflow-hidden"
-              >
-                <span className="relative z-10">Send Message</span>
-                <Send className="w-4 h-4 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                <div className="absolute inset-0 bg-gradient-to-r from-candy-blue to-candy-purple opacity-0 group-hover:opacity-10 transition-opacity" />
-              </button>
+              <div className="space-y-4">
+                <button 
+                  type="submit"
+                  disabled={isSending}
+                  className="w-full px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group relative overflow-hidden disabled:opacity-50 disabled:scale-100"
+                >
+                  <span className="relative z-10">{isSending ? 'Sending...' : 'Send Message'}</span>
+                  {!isSending && <Send className="w-4 h-4 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+                  <div className="absolute inset-0 bg-gradient-to-r from-candy-blue to-candy-purple opacity-0 group-hover:opacity-10 transition-opacity" />
+                </button>
+                
+                {result && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`text-center text-xs font-bold uppercase tracking-widest ${result.includes('Successfully') ? 'text-candy-blue' : 'text-red-400'}`}
+                  >
+                    {result}
+                  </motion.p>
+                )}
+              </div>
             </form>
           </motion.div>
 
