@@ -31,7 +31,7 @@ const Footer = () => {
                 playsInline
                 className="w-full h-full object-contain"
                 style={{ 
-                  filter: 'invert(1) hue-rotate(180deg) brightness(1.6) contrast(3) saturate(1.2)' 
+                  filter: 'invert(1) hue-rotate(260deg) brightness(1.4) contrast(3) saturate(2.5) drop-shadow(0 0 8px rgba(188, 19, 254, 0.6))' 
                 }}
               />
             </motion.div>
