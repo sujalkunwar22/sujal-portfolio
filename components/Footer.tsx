@@ -13,7 +13,7 @@ const Footer = () => {
             <motion.div
               animate={{
                 x: ["-10vw", "110vw"],
-                y: [0, -20, 0, -20, 0, -20, 0, -20, 0, -20, 0, -20, 0, -20, 0],
+                y: 0,
               }}
               transition={{
                 duration: 22,
