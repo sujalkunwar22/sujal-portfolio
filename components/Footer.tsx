@@ -21,7 +21,6 @@ const Footer = () => {
                 ease: "linear",
               }}
               className="absolute -top-12 w-20 h-20 pointer-events-none"
-              style={{ mixBlendMode: 'screen', isolation: 'isolate' }}
             >
               <video
                 src="/Untitled%20design%20(1).mp4"
@@ -29,9 +28,10 @@ const Footer = () => {
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain bg-transparent"
                 style={{ 
-                  filter: 'invert(1) contrast(10) brightness(1.6) sepia(1) saturate(10) hue-rotate(240deg) drop-shadow(0 0 12px rgba(188, 19, 254, 0.9))'
+                  filter: 'invert(1) contrast(15) brightness(1.4) sepia(1) saturate(10) hue-rotate(240deg)',
+                  mixBlendMode: 'screen'
                 }}
               />
             </motion.div>
