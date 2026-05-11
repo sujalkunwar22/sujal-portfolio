@@ -23,71 +23,61 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="relative overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
+    <section id="about" className="relative h-full flex items-center pt-32 pb-20">
+      <div className="container mx-auto px-6 glass-card p-12 rounded-[2.5rem] border-white/5 shadow-2xl transform -translate-y-8 md:-translate-y-12">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1 }}
             className="max-w-xl"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-10 font-display leading-tight">
-              About Me — <span className="text-white/40">Passionate about creating innovative solutions</span>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 font-display leading-tight">
+              About Me — <span className="text-white/40">Crafting innovative solutions</span>
             </h2>
-            <p className="text-lg text-white/60 leading-relaxed mb-12 font-sans">
-              I&apos;m a passionate software developer with a strong foundation in both front-end and back-end development. 
-              My journey in programming started with <span className="text-white">Python and Java</span>, and I&apos;ve since expanded my expertise to web 
-              technologies and database management. I believe in writing clean, efficient code and creating user-friendly 
-              applications that solve real-world problems.
+            <p className="text-base md:text-lg text-white/60 leading-relaxed mb-8 font-sans">
+              I&apos;m a software developer with a strong foundation in <span className="text-white">Python, Java, and modern web tech</span>. I believe in writing clean code that solves real-world problems.
             </p>
 
-            <div className="space-y-6">
-              <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-candy-blue mb-8">What I Do</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+            <div className="space-y-4">
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-candy-blue mb-4">Core Focus</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 {whatIDo.map((item, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center space-x-4 group"
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center space-x-3 group"
                   >
-                    <div className="w-2 h-2 rounded-full bg-candy-purple group-hover:scale-150 transition-transform" />
-                    <span className="text-sm font-medium text-white/80">{item}</span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-candy-purple group-hover:scale-150 transition-transform shadow-[0_0_10px_var(--color-candy-purple)]" />
+                    <span className="text-xs font-medium text-white/70">{item}</span>
                   </motion.div>
                 ))}
               </div>
             </div>
           </motion.div>
 
-          <div className="space-y-10">
-            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-candy-purple text-right lg:text-left">Tech Stack</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="space-y-6">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-candy-purple">Tech Stack</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-4">
               {technologies.map((tech, index) => (
                 <motion.div
                   key={tech.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -8 }}
-                  className="group p-8 rounded-2xl glass-card relative overflow-hidden"
+                  transition={{ delay: index * 0.05 }}
+                  className="group p-4 md:p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
-                  <div className="relative z-10">
-                    <div 
-                      className="mb-6 p-3 w-fit rounded-xl bg-white/5 group-hover:scale-110 transition-transform duration-500"
-                      style={{ color: tech.color }}
-                    >
-                      {tech.icon}
-                    </div>
-                    <h4 className="text-xl font-bold mb-3 font-display group-hover:text-candy-blue transition-colors">{tech.name}</h4>
-                    <p className="text-white/40 text-sm leading-relaxed font-sans">{tech.description}</p>
+                  <div 
+                    className="mb-3 p-2 w-fit rounded-lg bg-white/5 text-sm"
+                    style={{ color: tech.color }}
+                  >
+                    {tech.icon}
                   </div>
+                  <h4 className="text-sm font-bold font-display">{tech.name}</h4>
                 </motion.div>
               ))}
             </div>

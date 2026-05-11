@@ -71,72 +71,71 @@ const FlowArt: React.FC<FlowArtProps> = ({
     () => {
       if (!containerRef.current || reducedMotion) return;
 
-      // Enable smooth scroll normalization
-      ScrollTrigger.normalizeScroll(true);
-      ScrollTrigger.config({
-        limitCallbacks: true,
-        ignoreMobileResize: true,
-      });
+      ScrollTrigger.getAll().forEach(t => t.kill());
 
       const sections = Array.from(
         containerRef.current.querySelectorAll<HTMLElement>('[data-flow-section]'),
       );
       if (sections.length === 0) return;
 
-      const triggers: ScrollTrigger[] = [];
-
       sections.forEach((section, i) => {
-        gsap.set(section, { zIndex: i + 1 });
-
         const inner = section.querySelector<HTMLElement>('.flow-art-container');
         if (!inner) return;
 
-        // Entry animation with parallax and scale
+        gsap.set(inner, { 
+          clearProps: 'all',
+          opacity: i === 0 ? 1 : 0,
+          visibility: i === 0 ? 'visible' : 'hidden',
+          willChange: 'opacity, transform',
+        });
+
+        // Determine if content is taller than viewport
+        const contentHeight = inner.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const isTall = contentHeight > windowHeight;
+        const scrollDistance = isTall ? (contentHeight - windowHeight + 200) : 0;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${Math.max(windowHeight, scrollDistance) + 500}`,
+            pin: true,
+            pinSpacing: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          }
+        });
+
         if (i > 0) {
-          gsap.fromTo(inner, 
-            { 
-              y: 100,
-              scale: 0.9,
-              opacity: 0,
-              rotation: 5
-            },
-            {
-              y: 0,
-              scale: 1,
-              opacity: 1,
-              rotation: 0,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top bottom',
-                end: 'top top',
-                scrub: 1.5, // Smooth lag
-              },
-            }
+          tl.fromTo(inner, 
+            { opacity: 0, y: 50, scale: 0.98, visibility: 'hidden' },
+            { opacity: 1, y: 0, scale: 1, visibility: 'visible', duration: 0.5, ease: 'power2.inOut' }
           );
         }
 
+        // If content is tall, scroll through it while pinned
+        if (isTall) {
+          tl.to(inner, {
+            y: -(contentHeight - windowHeight + 100),
+            duration: 2,
+            ease: 'none'
+          });
+        } else {
+          tl.to({}, { duration: 1 }); // Hold shorter sections
+        }
+
         if (i < sections.length - 1) {
-          triggers.push(
-            ScrollTrigger.create({
-              trigger: section,
-              start: 'top top',
-              end: 'bottom top',
-              pin: true,
-              pinSpacing: true,
-              anticipatePin: 1,
-              onUpdate: (self) => {
-                // Smooth fade and scale out
-                const progress = self.progress;
-                gsap.set(inner, { 
-                  opacity: Math.max(0, 1 - progress * 2.5),
-                  scale: 1 - progress * 0.1,
-                  y: -progress * 100,
-                  visibility: progress >= 0.9 ? 'hidden' : 'visible'
-                });
-              }
-            }),
-          );
+          tl.to(inner, {
+            opacity: 0,
+            scale: 0.98,
+            y: isTall ? -(contentHeight - windowHeight + 150) : -50,
+            duration: 0.5,
+            ease: 'power2.inOut',
+            onComplete: () => gsap.set(inner, { visibility: 'hidden' }),
+            onReverseComplete: () => gsap.set(inner, { visibility: 'visible' })
+          });
         }
       });
 

@@ -46,13 +46,13 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="relative">
-      <div className="container mx-auto px-6">
+    <section id="projects" className="relative h-full flex flex-col justify-center pt-32 pb-20">
+      <div className="container mx-auto px-6 transform -translate-y-8 md:-translate-y-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-24 text-center lg:text-left"
+          className="mb-16 text-center lg:text-left"
         >
           <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-candy-blue mb-4">Portfolio</h3>
           <h2 className="text-4xl md:text-5xl font-bold font-display mb-6">Featured Projects</h2>

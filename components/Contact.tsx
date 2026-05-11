@@ -47,49 +47,50 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="contact" className="relative h-full flex items-center pt-32 pb-20">
+      <div className="container mx-auto px-6 glass-card p-12 md:p-20 rounded-[3rem] border-white/5 shadow-2xl relative z-20 transform -translate-y-8 md:-translate-y-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-24 text-center"
+          className="mb-16 text-center"
         >
           <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-candy-purple mb-4">Contact</h3>
-          <h2 className="text-4xl md:text-5xl font-bold font-display mb-6">Get In Touch</h2>
+          <h2 className="text-4xl md:text-6xl font-bold font-display mb-6">Get In Touch</h2>
           <p className="text-lg text-white/40 max-w-xl mx-auto">Let&apos;s work together on your next project or just say hello.</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="glass-card p-10 rounded-[2rem]"
           >
-            <form className="space-y-8" onSubmit={onSubmit}>
-              <div className="relative group">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-2 block ml-2">Name</label>
-                <input 
-                  type="text" 
-                  name="name"
-                  required
-                  placeholder="Sujal Kunwar"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-candy-blue/50 transition-all duration-300 placeholder:text-white/10 font-sans"
-                />
-              </div>
+            <form className="space-y-6" onSubmit={onSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="relative group">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-2 block ml-2">Name</label>
+                  <input 
+                    type="text" 
+                    name="name"
+                    required
+                    placeholder="Sujal Kunwar"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-candy-blue/50 transition-all duration-300 placeholder:text-white/10 font-sans"
+                  />
+                </div>
 
-              <div className="relative group">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-2 block ml-2">Email</label>
-                <input 
-                  type="email" 
-                  name="email"
-                  required
-                  placeholder="sujal@example.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-candy-blue/50 transition-all duration-300 placeholder:text-white/10 font-sans"
-                />
+                <div className="relative group">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-2 block ml-2">Email</label>
+                  <input 
+                    type="email" 
+                    name="email"
+                    required
+                    placeholder="sujal@example.com"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-candy-blue/50 transition-all duration-300 placeholder:text-white/10 font-sans"
+                  />
+                </div>
               </div>
 
               <div className="relative group">
@@ -107,7 +108,7 @@ const Contact = () => {
                 <button 
                   type="submit"
                   disabled={isSending}
-                  className="w-full px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group relative overflow-hidden disabled:opacity-50 disabled:scale-100"
+                  className="w-full px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group relative overflow-hidden disabled:opacity-50 disabled:scale-100 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                 >
                   <span className="relative z-10">{isSending ? 'Sending...' : 'Send Message'}</span>
                   {!isSending && <Send className="w-4 h-4 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
@@ -133,7 +134,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="flex flex-col justify-between py-6"
+            className="flex flex-col justify-between"
           >
             <div className="space-y-12">
               <p className="text-xl text-white/60 leading-relaxed font-sans">
@@ -142,7 +143,7 @@ const Contact = () => {
 
               <div className="space-y-8">
                 <div className="flex items-center gap-6 group cursor-pointer">
-                  <div className="p-5 bg-white/5 rounded-2xl group-hover:scale-110 transition-all duration-500 border border-white/5 group-hover:border-candy-blue/30">
+                  <div className="p-5 bg-white/5 rounded-2xl group-hover:scale-110 transition-all duration-500 border border-white/5 group-hover:border-candy-blue/30 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
                     <Mail className="w-6 h-6 text-candy-blue" />
                   </div>
                   <div>
@@ -152,7 +153,7 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-center gap-6 group cursor-pointer">
-                  <div className="p-5 bg-white/5 rounded-2xl group-hover:scale-110 transition-all duration-500 border border-white/5 group-hover:border-candy-purple/30">
+                  <div className="p-5 bg-white/5 rounded-2xl group-hover:scale-110 transition-all duration-500 border border-white/5 group-hover:border-candy-purple/30 shadow-[0_0_15px_rgba(0,242,255,0.1)]">
                     <MessageSquare className="w-6 h-6 text-candy-purple" />
                   </div>
                   <div>
@@ -173,7 +174,7 @@ const Contact = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-5 glass-card rounded-2xl text-white/40 ${social.color} transition-all duration-500 hover:scale-110 active:scale-90`}
+                  className={`p-5 bg-white/5 border border-white/5 rounded-2xl text-white/40 ${social.color} transition-all duration-500 hover:scale-110 active:scale-90 hover:bg-white/10`}
                 >
                   {social.icon}
                 </a>

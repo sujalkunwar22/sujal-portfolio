@@ -14,14 +14,25 @@
 
 @layer base {
   html {
-    @apply scroll-smooth selection:bg-candy-blue/30 selection:text-white;
+    @apply selection:bg-candy-blue/30 selection:text-white;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Removed scroll-smooth as it conflicts with GSAP scroll normalization */
   }
   
   body {
-    @apply bg-[#050505] text-white font-sans overflow-x-hidden;
-    overscroll-behavior: none; /* Prevents bounce, makes it feel more "exact" */
+    @apply bg-[#050505] text-white font-sans;
+    overflow-x: hidden;
+    overscroll-behavior-y: none; /* Prevents bounce flickering */
+  }
+
+  /* Hardware acceleration for scroll containers */
+  .flow-art-container,
+  .glass-card,
+  section {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
   }
 }
 
